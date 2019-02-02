@@ -19,8 +19,10 @@ class Main:
     def __init__(self, url="https://github.com/github?page=1", output_file="results.csv", username=None):
         # Check if we have args from python interactive console.
         self.file_path = os.getcwd() + "../../results/"
+
         if ap.prog != os.path.basename(__file__):
             args['name'] = ap.prog
+            # On win cmd this puts the results to solution/GHubScraper/results/
             self.file_path = os.getcwd() + "/GHubScraper/results/"
         # If you give both username will be used.
         if args['url'] is not None and args['name'] is not None:
@@ -40,9 +42,9 @@ class Main:
             self.username = username
 
         if args['file'] is not None:
-            self.output_file = args['file']
+            self.output_file = args['file'].strip()
         else:
-            self.output_file = output_file
+            self.output_file = output_file.strip()
         # Init total pages here to silence minor errors on the side.
         self.total_pages = 1
 
@@ -165,25 +167,24 @@ class Main:
                     continue
 
 
-if __name__ == '__main__':
-    while True:
-        ap = argparse.ArgumentParser()
-        ap.add_argument("-u", "--url", required=False,
-                        help="Url to scrape.")
-        ap.add_argument("-n", "--name", required=False,
-                        help="Github username.")
-        ap.add_argument("-f", "--file", required=False,
-                        help="Output filename.")
+while True:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-u", "--url", required=False,
+                    help="Url to scrape.")
+    ap.add_argument("-n", "--name", required=False,
+                    help="Github username.")
+    ap.add_argument("-f", "--file", required=False,
+                    help="Output filename.")
 
-        args = vars(ap.parse_args())
+    args = vars(ap.parse_args())
 
-        input("Press Enter to start David's github scraper : ")
-        print("Starting scraper....\n")
-        time.sleep(1.5)
+    input("Press Enter to start David's github scraper : ")
+    print("Starting scraper....\n")
+    time.sleep(1.5)
 
-        main = Main()
-        main.get_first_page()
-        main.scraping()
-        print(f"\nScraping finished, please find your results in \"results/{main.output_file}\"")
-        time.sleep(1.5)
-        break
+    main = Main()
+    main.get_first_page()
+    main.scraping()
+    print(f"\nScraping finished, please find your results in \"results/{main.output_file}\"")
+    time.sleep(1.5)
+    break

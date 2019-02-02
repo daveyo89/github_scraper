@@ -1,0 +1,77 @@
+User Guide for David's GithubScraper_v2
+
+Contents:
+I. Specification
+II. Implementation
+
+
+
+
+I. Specification:
+    1, We need a script that collect some information about the public github repositories from
+        https://github.com/github.
+    2, We need the following properties of each repositories:
+        - Url of the repo
+        - Short description
+        - Language of implementation (programming language)
+        - The list of the tags
+    3, We need the result to be in a csv file.
+    4, Documentation
+        We need a documentation that describes how we can build the environment and how to run
+        the script.
+
+II. Implementation:
+    The the whole codebase resides in GHubScraper/main.py.
+
+    Structure:
+        1 Class: Main
+            2 dunder methods: init and str
+            3 user defined functions: check_url, get_first_page, scraping
+        Run logic with argparsing. (# Could be more elegant from a different file)
+
+    Justification:
+        Why only one class?
+            For a simple application like this it would be an overkill to separate logic into smaller pieces,
+            decreasing readability. Simple is better than complex.
+        Why more complex than specified?
+            The original code did the job with minor errors and faulty cases, I didn't want to complete my task
+            by adding 5 more lines and nothing else.
+
+    Functionality:
+        Application explanation:
+            check_url:
+              We can initialize main with various arguments through parsing: -f "outputfilename", -u "url or username",
+              -n "username". With different validation methods we make sure we get a valid "https://github.com/username"
+              url address. Leaving arguments blank gives default parameters (according to specification), giving bad
+              parameters result in waiting for user input until a valid github username is presented. Checking validity
+              by http responses being less than 300 (not moved, not found, forbidden).
+            get_first_page:
+              This function does two things:
+              First, get the number of pages with a minimalistic request to minimise unnecessary
+              network traffic. If we can't find page number references in the "sauce" we assume the user's repository is
+              only one pages long. (more on why in next section)
+              Secondly, creates output file in .csv format with utf-8 encoding and writes first row for columns.
+              (There were many errors without explicitly enforcing utf-8 everywhere.)
+            scraping:
+              Iterating through the pages one by one, with a progressbar included for fanciness.
+              If our target user has only one page, we change url to "tab=repositories", otherwise we use our iteration
+              number "i", and add it to the url every turn.
+              We get all repository blocks on the page and then try to get the info out line by line for each block.
+              Making sure we don't get Nones, and adding whitespaces instead so the csv will recognize them still as a
+              value. Tags we add to a list.
+              And we're trying to catch Unicode and Type errors, just in case..
+
+        Running the application:
+            (Written and tested on Windows 10 Home.. I'm sorry i know..)
+
+            Run the virtual environment with activating venv/Scripts/activate
+            Open a terminal or cmd in GHubScraper folder and install requirements with the following script:
+            ~pip install -r requirements.txt
+
+            Navigate to GHubScraper and use commandline to start main.py. e.g.:"c:\lensa_v2\GHubScraper>python main.py"
+                You can use custom arguments to choose github url -u or user -n (for name)
+                (if you give both, username will be used), and the name of the output file -f .
+
+
+
+

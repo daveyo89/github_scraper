@@ -17,6 +17,11 @@ class Main:
     # If you don't want to use defaults, give github username to url parameter like so: Main(url="githubusername")
     # or url=https://github.com/githubusername.
     def __init__(self, url="https://github.com/github?page=1", output_file="results.csv", username=None):
+        # Check if we have args from python interactive console.
+        self.file_path = os.getcwd() + "../../results/"
+        if ap.prog != os.path.basename(__file__):
+            args['name'] = ap.prog
+            self.file_path = os.getcwd() + "/GHubScraper/results/"
         # If you give both username will be used.
         if args['url'] is not None and args['name'] is not None:
             args['url'] = None
@@ -93,10 +98,10 @@ class Main:
             self.output_file += ".csv"
 
         # Make dir if not exists.
-        os.makedirs("results", exist_ok=True)
+        os.makedirs(self.file_path, exist_ok=True)
         # Excessive use of utf-8 encoding prevents encoding errors.
         # Also had to change pycharm default encoding settings to utf-8, but it's a windows only thing as far as I know.
-        with open("results/" + self.output_file, 'w', encoding="utf-8", newline='') as f:
+        with open(f"{self.file_path}{self.output_file}", 'w', encoding="utf-8", newline='') as f:
             wr = csv.writer(f)
             # Make sure we delete existing results plus adding column names in first row.
             wr.writerow(["name", "description", "language", "tags"])
@@ -147,7 +152,7 @@ class Main:
                         repo_lang = " "
 
                     results = [repo_name, repo_desc, repo_lang, tags]
-                    with open(f"results/{self.output_file}", 'a', encoding="utf-8", newline='') as f:
+                    with open(f"{self.file_path}{self.output_file}", 'a', encoding="utf-8", newline='') as f:
                         writer = csv.writer(f)
                         writer.writerow(results)
 
@@ -175,6 +180,7 @@ if __name__ == '__main__':
         input("Press Enter to start David's github scraper : ")
         print("Starting scraper....\n")
         time.sleep(1.5)
+
         main = Main()
         main.get_first_page()
         main.scraping()

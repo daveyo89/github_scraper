@@ -17,7 +17,6 @@ class Main:
     # If you don't want to use defaults, give github username to url parameter like so: Main(url="githubusername")
     # or url=https://github.com/githubusername.
     def __init__(self, url="https://github.com/github?page=1", output_file="results.csv", username=None):
-
         # If you give both username will be used.
         if args['url'] is not None and args['name'] is not None:
             args['url'] = None

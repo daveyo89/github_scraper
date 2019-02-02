@@ -3,8 +3,7 @@ User Guide for David's GithubScraper_v2
 Contents:
 I. Specification
 II. Implementation
-
-
+III. Environment
 
 
 I. Specification:
@@ -36,6 +35,7 @@ II. Implementation:
         Why more complex than specified?
             The original code did the job with minor errors and faulty cases, I didn't want to complete my task
             by adding 5 more lines and nothing else.
+            Also, it feels more complete this way.
 
     Functionality:
         Application explanation:
@@ -68,10 +68,34 @@ II. Implementation:
             Open a terminal or cmd in GHubScraper folder and install requirements with the following script:
             ~pip install -r requirements.txt
 
-            Navigate to GHubScraper and use commandline to start main.py. e.g.:"c:\lensa_v2\GHubScraper\solution>python main.py"
-                You can use custom arguments to choose github url -u or user -n (for name)
-                (if you give both, username will be used), and the name of the output file -f .
+            Three different options tested:
+              cmd/terminal:
+                Navigate to the project folder. (lensa_v2/GHubScraper/solution)
+                  ~python main.py -f "outputfile" -n "username" -u "https://github.com/username"
+                Optional arguments. Leave them for defaults.
+                (If you give both username and url, username will be used), and the name of the output file -f .
 
+              ide:
+                Open main.py right click and run. Can give argument parameters in
+                  Main(username="name", output_file="file").
 
+              python console:
+                import sys
+                import os
+                sys.prefix -to check if we're in the venv.
+                sys.argv = ["username", "-f output_file_name"]
+                # inside pycharm's python console:
+                execfile(os.getcwd() + '\GHubScraper\solution\main.py')
+                # on windows cmd it worked with this:
+                exec(open(os.getcwd() + '\\main.py').read())
+
+III. Environment:
+    The base interpreter is:
+      Python 3.7.2 (default, Jan  2 2019, 17:07:39) [MSC v.1915 64 bit (AMD64)] :: Anaconda, Inc. on win32
+    Step by step:
+        1. Download codebase from my github page, which if you're reading this you've probably done already.
+        2. Activate python's virtual environment (assuming you have python installed)
+        3. Install required packages with: pip install -r requirements.txt (pycharm will probably offer it automatically)
+        4. Choose favorite execution method. (python console still has some bugs tho.)
 
 

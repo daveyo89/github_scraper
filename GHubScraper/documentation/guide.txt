@@ -21,7 +21,7 @@ I. Specification:
         the script.
 
 II. Implementation:
-    The the whole codebase resides in GHubScraper/main.py.
+    The the whole codebase resides in GHubScraper\solution\main.py.
 
     Structure:
         1 Class: Main
@@ -68,7 +68,7 @@ II. Implementation:
             Open a terminal or cmd in GHubScraper folder and install requirements with the following script:
             ~pip install -r requirements.txt
 
-            Navigate to GHubScraper and use commandline to start main.py. e.g.:"c:\lensa_v2\GHubScraper>python main.py"
+            Navigate to GHubScraper and use commandline to start main.py. e.g.:"c:\lensa_v2\GHubScraper\solution>python main.py"
                 You can use custom arguments to choose github url -u or user -n (for name)
                 (if you give both, username will be used), and the name of the output file -f .
 

@@ -21,14 +21,17 @@ class Main:
         # If you give both username will be used.
         if args['url'] is not None and args['name'] is not None:
             args['url'] = None
-
+        # If we have a url from argparse:
         if args['url'] is not None:
             self.url = args['url']
+        # And if we don't:
         else:
             self.url = url
 
+        # If we have a name from argparse:
         if args['name'] is not None:
             self.username = args['name']
+        # Else it's default/given parameter.
         else:
             self.username = username
 
@@ -41,7 +44,7 @@ class Main:
 
     def __str__(self):
         # In case someone is deeply curious.
-        return "Python class to scrape github/github."
+        return f"Web scraping the url:{self.url}, "
 
     def check_url(self):
         url = self.url
@@ -50,7 +53,6 @@ class Main:
             url = "https://github.com/" + self.url
         if "page" not in self.url:
             url = url + "?page=1"
-
         # Check if user gave url or username and if they are bad or not.
         # In case of a bad url, or a non-existent user, we proceed by using username only.
         if self.username is not None or requests.head(url).status_code >= 300:
@@ -62,7 +64,7 @@ class Main:
                     new_username = "github"
                 url2 = "https://github.com/" + new_username + "?page=1"
                 # Preparing multi page compatibility with given username.
-                self.url = url2[:-1]
+            self.url = url2[:-1]
             return url2
         else:
             # Preparing multi page comp. with url.

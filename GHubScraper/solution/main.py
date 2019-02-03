@@ -25,6 +25,7 @@ class Main:
         # Check if we have args from python interactive console.
         # self.file_path = os.getcwd() + "../../results/"
         #
+        print(args)
         if ap.prog != os.path.basename(__file__):
             args['name'] = ap.prog
         #     # On win cmd this puts the results to solution/GHubScraper/results/
@@ -191,8 +192,9 @@ while True:
                     help="Github username.")
     ap.add_argument("-f", "--file", required=False,
                     help="Output filename.")
-
-    args = vars(ap.parse_args())
+    args, unknown = ap.parse_known_args()
+    args = vars(args)
+    # args = vars(ap.parse_args())
 
     # input("Press Enter to start David's github scraper : ")
     print("Starting scraper....\n")

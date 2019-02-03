@@ -8,22 +8,30 @@ import time
 import argparse
 import os
 
+"""The code is heavily commented due to it being a "homework" and all. If something is still not clear, don't worry,
+    it is obviously my fault. For manual testing besides the default github scraping I used mine, I encourage you,
+    to try it on yours as well. If I did well here, it is harder to produce an error than a result. 
+    Enjoy! """
+
 
 class Main:
     # Get number of pages at initialisation (was not part of task, but no errors with valid github page.)
-    """I know __init__ is a bit too long like this, but I choose this solution to make the class ready-to-use as soon as
-    it is instantiated."""
+    # I know __init__ is a bit too long like this, but I choose this solution to make the class ready-to-use as soon as
+    # it is instantiated.
 
     # If you don't want to use defaults, give github username to url parameter like so: Main(url="githubusername")
     # or url=https://github.com/githubusername.
     def __init__(self, url="https://github.com/github?page=1", output_file="results.csv", username=None):
         # Check if we have args from python interactive console.
-        self.file_path = os.getcwd() + "../../results/"
-
+        # self.file_path = os.getcwd() + "../../results/"
+        #
         if ap.prog != os.path.basename(__file__):
             args['name'] = ap.prog
-            # On win cmd this puts the results to solution/GHubScraper/results/
-            self.file_path = os.getcwd() + "/GHubScraper/results/"
+        #     # On win cmd this puts the results to solution/GHubScraper/results/
+            self.file_path = os.getcwd() + "/GHubScraper/solution/"
+        else:
+            self.file_path = ""
+
         # If you give both username will be used.
         if args['url'] is not None and args['name'] is not None:
             args['url'] = None
@@ -50,7 +58,8 @@ class Main:
 
     def __str__(self):
         # In case someone is deeply curious.
-        return f"Web scraping the url:{self.url}, "
+        return f"Web scraping the url:{str(self.url)}, \nuser name: {str(self.username)}, " \
+            f"\nfile will be written in: {str(self.output_file)}"
 
     def check_url(self):
         url = self.url
@@ -100,7 +109,7 @@ class Main:
             self.output_file += ".csv"
 
         # Make dir if not exists.
-        os.makedirs(self.file_path, exist_ok=True)
+        # os.makedirs(self.file_path, exist_ok=True)
         # Excessive use of utf-8 encoding prevents encoding errors.
         # Also had to change pycharm default encoding settings to utf-8, but it's a windows only thing as far as I know.
         with open(f"{self.file_path}{self.output_file}", 'w', encoding="utf-8", newline='') as f:
@@ -128,11 +137,11 @@ class Main:
             # Scraping starts here with the prepared url.
             sauce = urllib.request.urlopen(url).read()
             soup = bs.BeautifulSoup(sauce, 'html.parser')
-            # Get all repository blocks.
+            # Get all repository blocks and iterate by divs.
             for div in soup.find_all('li', {'itemprop': ['owns']}):
                 try:
                     tags = []
-
+                    # In each div we look for the info we need.
                     repo_name = div.find('a', {'itemprop': ['name codeRepository']}).text.strip()
 
                     for tag in div.find_all('a', {'class': ['topic-tag topic-tag-link f6 my-1']}):
@@ -152,12 +161,15 @@ class Main:
                         repo_lang = repo_lang.text.strip()
                     else:
                         repo_lang = " "
-
+                    # Put findings in a list.
                     results = [repo_name, repo_desc, repo_lang, tags]
+                    # Then write it as a line.
                     with open(f"{self.file_path}{self.output_file}", 'a', encoding="utf-8", newline='') as f:
                         writer = csv.writer(f)
                         writer.writerow(results)
+                    # Using 'with' statement makes sure we close resources after use.
 
+                    # Uncomment to see data flowing in on console.
                     # print(
                     #     f"\n Repo name: {repo_name}\n Short description: {repo_desc}\n"
                     #     f" Programming Language: {repo_lang}\n Tags: {tags}\n")
@@ -168,6 +180,10 @@ class Main:
 
 
 while True:
+
+    # Argparse catches given arguments within cmd/terminal, also "ap.prog" will equal given parameter from python shell,
+    # making it losing its name "main". I couldn't find an elegant workaround yet, so I use it now as an indicator
+    # that someone is trying to give arguments through shell commands.. Please contact me if you have a solution.
     ap = argparse.ArgumentParser()
     ap.add_argument("-u", "--url", required=False,
                     help="Url to scrape.")
@@ -178,9 +194,9 @@ while True:
 
     args = vars(ap.parse_args())
 
-    input("Press Enter to start David's github scraper : ")
+    # input("Press Enter to start David's github scraper : ")
     print("Starting scraper....\n")
-    time.sleep(1.5)
+    time.sleep(2.0)
 
     main = Main()
     main.get_first_page()

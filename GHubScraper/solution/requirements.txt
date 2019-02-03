@@ -7,8 +7,6 @@ idna==2.8
 jsonschema==2.6.0
 macholib==1.11
 pefile==2018.8.8
-PyInstaller==3.4
-pywin32-ctypes==0.2.0
 requests==2.21.0
 soupsieve==1.7.3
 tqdm==4.30.0

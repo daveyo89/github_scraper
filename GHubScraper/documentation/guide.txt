@@ -45,6 +45,7 @@ II. Implementation:
               url address. Leaving arguments blank gives default parameters (according to specification), giving bad
               parameters result in waiting for user input until a valid github username is presented. Checking validity
               by http responses being less than 300 (not moved, not found, forbidden).
+              # Update: No more url checking, switched to username handling only.
             get_first_page:
               This function does two things:
               First, get the number of pages with a minimalistic request to minimise unnecessary
@@ -74,19 +75,21 @@ II. Implementation:
                   ~python main.py -f "outputfile" -n "username" -u "https://github.com/username"
                 Optional arguments. Leave them for defaults.
                 (If you give both username and url, username will be used), and the name of the output file -f .
+                # Update, url can't be given anymore, will be stored as unknown argument.
 
               ide:
-                Open main.py right click and run. Can give argument parameters in
+                Open main.py and run. Can give argument parameters at the instantiation of Main:
                   Main(username="name", output_file="file").
 
               python console:
                 import sys
                 import os
                 sys.prefix -to check if we're in the venv.
-                sys.argv = ["randomthing","-n username" "-f output_file_name"] (running without arguments will trigger user input)
+                sys.argv = ["randomthing","-n username" "-f output_file_name"]
+                (running without arguments will trigger defaults, bad arguments trigger user input.)
                 # inside pycharm's python console:
                 execfile(os.getcwd() + '\GHubScraper\solution\main.py')
-                # on windows cmd it worked with this:
+                # on windows cmd:
                 exec(open(os.getcwd() + '\GHubScraper\solution\main.py').read())
 
               pyinstaller:
@@ -107,7 +110,7 @@ III. Environment:
         2. Activate python's virtual environment (assuming you have python installed)(only on windows, on others you have
             to install requirements to your env.)
             or Install required packages with: pip install -r requirements.txt (recommended)
-        3. Choose favorite execution method. (python console still has some bugs tho.)
+        3. Choose favorite execution method. (
 
 
 UPDATE 1: Eliminated url acceptance and validation from the code, working with usernames only. More simple, clean code.

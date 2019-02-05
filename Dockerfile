@@ -11,4 +11,4 @@ EXPOSE 80
 
 ENV NAME Solution
 
-CMD [ "python", "main.py" ]
+CMD [ "python", "solution/main.py" ]

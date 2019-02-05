@@ -1,18 +1,19 @@
 name,description,language,tags
+libprojfs,Linux projected filesystem library,C,"['git', 'filesystems', 'fuse-filesystem']"
+linguist,"Language Savant. If your repository's language is being reported incorrectly, send us a pull request!",Ruby,"['linguistic', 'syntax-highlighting', 'language-grammars', 'language-statistics']"
+opensource.guide,Community guides for open source creators,JavaScript,"['open-source', 'oss', 'tutorial', 'documentation', 'best-practices']"
+explore,Community-curated topic pages on GitHub,Ruby,"['topics', 'collections', 'community-driven']"
+licensed,A Ruby gem to cache and verify the licenses of dependencies,Ruby,"['licensing', 'open-source-licensing', 'dependencies', 'license-management']"
+vitess-gh,Vitess is a database clustering system for horizontal scaling of MySQL.,Go,[]
 dmca,Repository with text of DMCA takedown notices as received. GitHub does not endorse or adopt any assertion contained in the following notices. Users identified in the notices are presumed innocent until proven guilty. Additional information about our DMCA policy can be found at,,['dmca']
+choosealicense.com,A site to provide non-judgmental guidance on choosing a license for your open source project,Ruby,"['jekyll', 'open-source', 'licensing', 'law', 'open-source-licensing']"
+gh-ost,GitHub's Online Schema Migrations for MySQL,Go,"['schema-migrations', 'mysql']"
 details-menu-element,A menu opened with a <details> button.,JavaScript,"['web-components', 'custom-elements']"
 VisualStudio,GitHub Extension for Visual Studio,C#,"['github', 'git', 'c-sharp', 'visual-studio']"
-opensource.guide,Community guides for open source creators,JavaScript,"['open-source', 'oss', 'tutorial', 'documentation', 'best-practices']"
 opensourcefriday,🚲 Contribute to the open source community every Friday,Ruby,[]
 brubeck,A Statsd-compatible metrics aggregator,C,[]
 hub,A command-line tool that makes git easier to use with GitHub.,Go,"['git', 'go', 'homebrew', 'github-api', 'pull-request']"
-choosealicense.com,A site to provide non-judgmental guidance on choosing a license for your open source project,Ruby,"['jekyll', 'open-source', 'licensing', 'law', 'open-source-licensing']"
-linguist,"Language Savant. If your repository's language is being reported incorrectly, send us a pull request!",Ruby,"['linguistic', 'syntax-highlighting', 'language-grammars', 'language-statistics']"
-explore,Community-curated topic pages on GitHub,Ruby,"['topics', 'collections', 'community-driven']"
-libprojfs,Linux projected filesystem library,Shell,"['git', 'filesystems', 'fuse-filesystem']"
 quote-selection,Install a shortcut to append selected text to a <textarea> as a Markdown quote.,JavaScript,"['markdown', 'decorator']"
-vitess-gh,Vitess is a database clustering system for horizontal scaling of MySQL.,Go,[]
-gh-ost,GitHub's Online Schema Migrations for MySQL,Go,"['schema-migrations', 'mysql']"
 cmark-gfm,"GitHub's fork of cmark, a CommonMark parsing and rendering library and program in C",C,[]
 gitignore,A collection of useful .gitignore templates,,"['gitignore', 'git']"
 hoosegow,Ephemeral Docker jails for running untrusted Ruby code,Ruby,[]
@@ -25,7 +26,6 @@ glb-director,GitHub Load Balancer Director and supporting tooling.,C,[]
 freno-client,"Ruby client and throttling library for freno, the throttler service",Ruby,"['mysql', 'ruby', 'ruby-gem', 'high-availability', 'throttling', 'freno']"
 pages-gem,A simple Ruby Gem to bootstrap dependencies for setting up and maintaining a local Jekyll environment in sync with GitHub Pages,Ruby,"['github', 'ruby', 'jekyll', 'jekyll-plugin', 'ruby-gem', 'jekyll-theme', 'github-pages']"
 backup-utils,GitHub Enterprise Backup Utilities,Shell,"['github-enterprise', 'backups']"
-licensed,A Ruby gem to cache and verify the licenses of dependencies,Ruby,"['licensing', 'open-source-licensing', 'dependencies', 'license-management']"
 VFSForGit,GitHub development on VFSForGit [please fork upstream Microsoft/VFSForGit repository instead of this one],C#,[]
 saml-ldap-team-sync,Sync GitHub teams to groups in Active Directory when using SAML,Python,[]
 octodns,Tools for managing DNS across multiple providers,Python,[]

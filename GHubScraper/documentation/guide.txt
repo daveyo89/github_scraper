@@ -1,10 +1,9 @@
-User Guide for David's GithubScraper_v2
+User Guide for David's GithubScraper_v2 (old, simple scraper upgraded as a bonus)
 
 Contents:
 I. Specification
 II. Implementation
 III. Environment
-
 
 I. Specification:
     1, We need a script that collect some information about the public github repositories from
@@ -21,6 +20,7 @@ I. Specification:
 
 II. Implementation:
     The the whole codebase resides in GHubScraper\solution\main.py.
+        (for a simple solution please find old/old.py)
 
     Structure:
         1 Class: Main
@@ -83,19 +83,31 @@ II. Implementation:
                 import sys
                 import os
                 sys.prefix -to check if we're in the venv.
-                sys.argv = ["username", "-f output_file_name"]
+                sys.argv = ["randomthing","-n username" "-f output_file_name"] (running without arguments will trigger user input)
                 # inside pycharm's python console:
                 execfile(os.getcwd() + '\GHubScraper\solution\main.py')
                 # on windows cmd it worked with this:
-                exec(open(os.getcwd() + '\\main.py').read())
+                exec(open(os.getcwd() + '\GHubScraper\solution\main.py').read())
+
+              pyinstaller:
+                To make it easy for poor windows users pyinstaller is included
+                in venv. After activating it, use ~pyinstaller --onefile main.py
+                Now you can use it simply by running the newly created
+                dist/main.exe
+
+        Results:
+            No matter the method, results are saved in solution/results folder which is next to the main.py file.
+
 
 III. Environment:
     The base interpreter is:
       Python 3.7.2 (default, Jan  2 2019, 17:07:39) [MSC v.1915 64 bit (AMD64)] :: Anaconda, Inc. on win32
     Step by step:
         1. Download codebase from my github page, which if you're reading this you've probably done already.
-        2. Activate python's virtual environment (assuming you have python installed)
-        3. Install required packages with: pip install -r requirements.txt (pycharm will probably offer it automatically)
-        4. Choose favorite execution method. (python console still has some bugs tho.)
+        2. Activate python's virtual environment (assuming you have python installed)(only on windows, on others you have
+            to install requirements to your env.)
+            or Install required packages with: pip install -r requirements.txt (recommended)
+        3. Choose favorite execution method. (python console still has some bugs tho.)
 
 
+UPDATE 1: Eliminated urls from the code, working with usernames only. More simple, clean code.

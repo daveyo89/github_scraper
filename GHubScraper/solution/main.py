@@ -7,6 +7,7 @@ from tqdm import tqdm
 import time
 import argparse
 import os
+import sys
 
 """The code is heavily commented due to it being a "homework" and all. If something is still not clear, don't worry,
     it is obviously my fault. For manual testing besides the default github scraping I used mine, I encourage you,
@@ -21,70 +22,58 @@ class Main:
 
     # If you don't want to use defaults, give github username to url parameter like so: Main(url="githubusername")
     # or url=https://github.com/githubusername.
-    def __init__(self, url="https://github.com/github?page=1", output_file="results.csv", username=None):
-        # Check if we have args from python interactive console.
-        # self.file_path = os.getcwd() + "../../results/"
-        #
-        print(args)
-        if ap.prog != os.path.basename(__file__):
-            args['name'] = ap.prog
-        #     # On win cmd this puts the results to solution/GHubScraper/results/
-            self.file_path = os.getcwd() + "/GHubScraper/solution/"
-        else:
-            self.file_path = ""
+    def __init__(self, username="github", output_file="results.csv"):
 
-        # If you give both username will be used.
-        if args['url'] is not None and args['name'] is not None:
-            args['url'] = None
-        # If we have a url from argparse:
-        if args['url'] is not None:
-            self.url = args['url']
-        # And if we don't:
-        else:
-            self.url = url
+        if username is not None and len(str(username)) > 1:
+            self.username = username.strip()
+        # Check if user comes from python console:
+        if ap.prog != os.path.basename(__file__) and args['name'] is None:
+            args['name'] = "github"
+            # On win cmd this puts the results to solution/GHubScraper/results/
+            self.file_path = os.getcwd() + "/GHubScraper/solution/results/"
+        elif ap.prog != os.path.basename(__file__):
+            self.file_path = os.getcwd() + "/GHubScraper/solution/results/"
 
-        # If we have a name from argparse:
+        else:
+            self.file_path = os.getcwd() + "/results/"
+
+        # If we have a name from argparse or default.
         if args['name'] is not None:
-            self.username = args['name']
-        # Else it's default/given parameter.
-        else:
-            self.username = username
+            self.username = args['name'].strip()
 
+        # Get arg or default.
         if args['file'] is not None:
             self.output_file = args['file'].strip()
         else:
-            self.output_file = output_file.strip()
+            self.output_file = output_file
         # Init total pages here to silence minor errors on the side.
         self.total_pages = 1
 
     def __str__(self):
         # In case someone is deeply curious.
-        return f"Web scraping the url:{str(self.url)}, \nuser name: {str(self.username)}, " \
-            f"\nfile will be written in: {str(self.output_file)}"
+        return f"Getting info from the repositories of this user: {str(self.username)}, saving them to " \
+            f"{str(self.output_file)}"
+
+    def __repr__(self):
+        return f"Default user: github\nCurrent user: {str(self.username)}\nCurrent target filename: {self.output_file}"
 
     def check_url(self):
-        url = self.url
-        # Preparing url in case.
-        if "https://github.com/" not in self.url:
-            url = "https://github.com/" + self.url
-        if "page" not in self.url:
-            url = url + "?page=1"
-        # Check if user gave url or username and if they are bad or not.
-        # In case of a bad url, or a non-existent user, we proceed by using username only.
-        if self.username is not None or requests.head(url).status_code >= 300:
-            url2 = "https://github.com/" + str(self.username) + "?page=1"
-            while requests.head(url2).status_code >= 300:
+        url = f"https://github.com/{str(self.username)}?page=1"
+
+        # In case of a non-existent user or a bad url we ask for new input.
+        if self.username is None or requests.head(url).status_code >= 300:
+            while requests.head(url).status_code >= 300:
                 # Get new username by input.
-                new_username = input("Enter valid username or leave blank for defaults (github/github)")
+                new_username = str(input("Enter valid username or leave blank for default. (github/github)")).strip()
                 if new_username == "":
                     new_username = "github"
-                url2 = "https://github.com/" + new_username + "?page=1"
+                url = "https://github.com/" + new_username + "?page=1"
                 # Preparing multi page compatibility with given username.
-            self.url = url2[:-1]
-            return url2
+            self.username = url[:-1]
+            return url
         else:
             # Preparing multi page comp. with url.
-            self.url = url[:-1]
+            self.username = url[:-1]
             return url
 
     def get_first_page(self):
@@ -109,8 +98,7 @@ class Main:
         if self.output_file[-4:] != ".csv":
             self.output_file += ".csv"
 
-        # Make dir if not exists.
-        # os.makedirs(self.file_path, exist_ok=True)
+        os.makedirs(self.file_path, exist_ok=True)
         # Excessive use of utf-8 encoding prevents encoding errors.
         # Also had to change pycharm default encoding settings to utf-8, but it's a windows only thing as far as I know.
         with open(f"{self.file_path}{self.output_file}", 'w', encoding="utf-8", newline='') as f:
@@ -130,10 +118,10 @@ class Main:
         for i in tqdm(range(self.total_pages)):
             if self.total_pages == 1:
                 # Take away ?page= from url to replace it with repositories seen below.
-                url = self.url[:-5] + "tab=repositories"
+                url = self.username[:-5] + "tab=repositories"
             else:
                 # Or adding ?page=n to url.
-                url = self.url + f"{str(i + 1)}"
+                url = self.username + f"{str(i + 1)}"
 
             # Scraping starts here with the prepared url.
             sauce = urllib.request.urlopen(url).read()
@@ -181,21 +169,20 @@ class Main:
 
 
 while True:
-
     # Argparse catches given arguments within cmd/terminal, also "ap.prog" will equal given parameter from python shell,
     # making it losing its name "main". I couldn't find an elegant workaround yet, so I use it now as an indicator
     # that someone is trying to give arguments through shell commands.. Please contact me if you have a solution.
     ap = argparse.ArgumentParser()
-    ap.add_argument("-u", "--url", required=False,
-                    help="Url to scrape.")
+
     ap.add_argument("-n", "--name", required=False,
                     help="Github username.")
     ap.add_argument("-f", "--file", required=False,
                     help="Output filename.")
+
     args, unknown = ap.parse_known_args()
     args = vars(args)
-    # args = vars(ap.parse_args())
 
+    # args = vars(ap.parse_args())
     # input("Press Enter to start David's github scraper : ")
     print("Starting scraper....\n")
     time.sleep(2.0)
@@ -203,6 +190,6 @@ while True:
     main = Main()
     main.get_first_page()
     main.scraping()
-    print(f"\nScraping finished, please find your results in \"results/{main.output_file}\"")
+    print(f"\nScraping finished, please find your results in \"{main.output_file}\"")
     time.sleep(1.5)
     break

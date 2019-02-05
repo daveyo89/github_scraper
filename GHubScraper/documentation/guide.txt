@@ -110,4 +110,8 @@ III. Environment:
         3. Choose favorite execution method. (python console still has some bugs tho.)
 
 
-UPDATE 1: Eliminated urls from the code, working with usernames only. More simple, clean code.
+UPDATE 1: Eliminated url acceptance and validation from the code, working with usernames only. More simple, clean code.
+
+DOCKER:
+    On windows 10 home I've had difficulties running docker so here is a "successful build" on docker hub,
+    I wasn't able to test it. Download and try at your own risk. ~docker pull daveyo89/homework:latest

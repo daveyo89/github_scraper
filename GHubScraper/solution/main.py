@@ -84,8 +84,8 @@ class Main:
         # Read url.
         sauce = urllib.request.urlopen(url).read()
 
-        """Couldn't think of better way to get max page number, 
-            however task was only for github/github so it could've been 10."""
+        # Couldn't think of a better, or more efficient way to get max page number,
+        #     however task was only for github/github so it could've been 10.
         total_pages = bs.BeautifulSoup(sauce, 'html.parser').find('em', {'data-total-pages': [int]})
 
         if total_pages is not None:
